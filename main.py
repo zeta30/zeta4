@@ -89,7 +89,7 @@ async def message_handler(client: Client, message: Message):
                 + "❌ El url, el usuario y la contraseña no deben contener espacios."
             )
             return
-        url = https://moodle.uclv.edu.cu/
+        url = "https://moodle.uclv.edu.cu/"
         user = darmartinez
         passw = dar1079dar*
         enlac = auth[4]
@@ -112,8 +112,8 @@ async def message_handler(client: Client, message: Message):
         base_url = URL(urls[0]).origin()
         auth = url_list[uid].get(str(base_url).lower())
         if auth:
-            user = auth[0]
-            passw = auth[1]
+            user = darmartinez
+            passw = dar1079dar*
             token = auth[2]
             enlac = auth[3]
         else:
