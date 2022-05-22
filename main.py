@@ -16,8 +16,8 @@ from draft_to_calendar import send_calendar
 async def get_token(base_url: URL, user: str, passw: str):
     query: dict = {
         "service": "moodle_mobile_app",
-        "username": darmartinez,
-        "password": dar1079dar*,
+        "username": user,
+        "password": passw,
     }
     token_url: URL = base_url.with_path("login/token.php").with_query(query)
     try:
@@ -63,7 +63,7 @@ async def message_handler(client: Client, message: Message):
     verdad = True
 
     if msg.lower() == "/start":
-        await message.reply("Bienvenidos {}".format(message.from_user.first_name))
+        await message.reply("Bienvenido {}".format(message.from_user.first_name))
         return
 
     # Comprobar que el usuario esté en el grupo o está autorizado
@@ -80,26 +80,27 @@ async def message_handler(client: Client, message: Message):
     # Autenticación
     if msg.lower().startswith("/setauth"):
         progress_message = await message.reply(
-            "⏳Autenticando⏳")
+            "⏳ Autenticando...")
         auth: list = msg.split(" ")
         print(auth)
         if len(auth) != 5:
             await progress_message.edit(
-                "❌La forma correcta es: /setauth https://moodle.uclv.edu.cu/ Usuario Contraseña\n\n"
+                "❌ La forma correcta es: /setauth https://moodle.uclv.edu.cu/ Usuario Contraseña\n\n"
+                + "❌ El url, el usuario y la contraseña no deben contener espacios."
             )
             return
-        url = URL(auth[1]).origin()
-        user = auth[2]
-        passw = auth[3]
+        url = https://moodle.uclv.edu.cu/
+        user = darmartinez
+        passw = dar1079dar*
         enlac = auth[4]
         token = await get_token(url, user, passw)
         if token:
             url_list[uid][str(url).lower()] = [user, passw, token, enlac]
-            await progress_message.edit("✅Configuración completada✅")
+            await progress_message.edit("✅ Usuario y contraseña guardados.")
         else:
             if not token:
                 await progress_message.edit(
-                    "❌Error al obtener token con las credenciales actuales❌"
+                    "❌ Error al obtener token con las creenciales actuales."
                 )
         return
     # Firmar enlaces
@@ -123,9 +124,9 @@ async def message_handler(client: Client, message: Message):
         counter = 0
 
         if str(urls[0]).__contains__("/draftfile.php/"):
-            await progress_message.edit("⏳Moviendo draft a calenario⏳")
+            await progress_message.edit("⏳ Moviendo Drafts a calenario...")
             urls = await send_calendar(str(base_url), user, passw, urls)
-            await progress_message.edit("⏳Firmando {} links⏳".format(len(urls)))
+            await progress_message.edit("⏳ Firmando {} links...".format(len(urls)))
 
         for url in urls:
             url_signed = sign_url(token, URL(url))
@@ -138,7 +139,7 @@ async def message_handler(client: Client, message: Message):
         
         if url_list[uid]["urls"] == []:
             await message.reply(
-                "❌No hay ningún link firmado❌"
+                "❌ No hay ningún link firmado."
             )
         else:
             links = "\n".join(url_list[uid]["urls"])
@@ -163,7 +164,7 @@ async def message_handler(client: Client, message: Message):
     if msg == "/txt":
         if url_list[uid]["urls"] == []:
             await message.reply(
-                "❌No hay ningún link firmado❌"
+                "❌ No hay ningún link firmado."
             )
         else:
             links = "\n".join(url_list[uid]["urls"])
@@ -182,6 +183,6 @@ async def message_handler(client: Client, message: Message):
 print("Starting...")
 bot.start()
 print("Ready.")
-bot.send_message(bot_admin_group, "✅Bot reiniciado✅")
+bot.send_message(bot_admin_group, "Bot reiniciado.")
 loop: asyncio.AbstractEventLoop = asyncio.get_event_loop_policy().get_event_loop()
 loop.run_forever()

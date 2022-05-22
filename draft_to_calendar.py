@@ -20,9 +20,9 @@ async def send_calendar(moodle: str, user: str, passw: str, urls: list) -> list:
                 token = ""
             payload = {
                 "anchor": "",
-                "logintoken": https://moodle.uclv.edu.cu/,
-                "username": darmartinez,
-                "password": dar1079dar*,
+                "logintoken": token,
+                "username": user,
+                "password": passw,
                 "rememberusername": 1,
             }
             async with session.post(moodle + "/login/index.php", data=payload) as response:
